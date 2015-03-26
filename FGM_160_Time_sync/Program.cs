@@ -17,9 +17,12 @@ namespace FGM_160_Time_sync
         private static int      Selected_Data_Bits     = 8;
         private static Parity   Selected_Parity        = Parity.None;
         private static StopBits Selected_Stop_Bits     = StopBits.Two;
+        
         private static byte     Selected_Slave_Address = 1;
-        private static ushort   Selected_Start_Register = 1000;
-        private static ushort Selected_Number_Of_Registers = 12;
+        private static ushort   Selected_Start_Register      = 1000;
+        private static ushort   Selected_Number_Of_Registers = 12;
+
+        private static TimeSpan Threshold = new TimeSpan(0, 5, 0);
 
         static void Main(string[] args)
         {

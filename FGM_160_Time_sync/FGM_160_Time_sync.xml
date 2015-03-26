@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Config>
+  <Serial_Port
+    COM="COM1"
+    Baudrate="38400"
+    Data_Bits="8"
+    Parity="None"
+    Stop_Bits="2"/>
+
+  <Modbus_Slave
+    Slave_Address="1"
+    Start_Register="1000"
+    Number_Of_Registers="12"/>
+</Config>
