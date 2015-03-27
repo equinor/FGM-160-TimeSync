@@ -6,7 +6,7 @@
     Baudrate="38400"
     Data_Bits="8"
     Parity="None"
-    Stop_Bits="2"/>
+    Stop_Bits="Two"/>
 
   <Modbus_Slave
     Slave_Address="1"

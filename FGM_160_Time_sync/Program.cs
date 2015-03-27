@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO.Ports;
+using System.Xml;
 using Modbus.Device;
 
 
@@ -75,8 +76,38 @@ namespace FGM_160_Time_sync
 
         public static void Read_Config(string Config_File)
         {
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.IgnoreComments = true;
+            settings.IgnoreProcessingInstructions = true;
+            settings.IgnoreWhitespace = true;
 
+            XmlReader reader = XmlReader.Create(Config_File, settings);
+
+            try
+            {
+                while (reader.Read())
+                {
+                    if (reader.NodeType == XmlNodeType.Element && reader.Name == "Serial_Port")
+                    {
+                        Selected_Com_Port = reader.GetAttribute("COM");
+                        Selected_Baud_Rate = XmlConvert.ToInt32(reader.GetAttribute("Baudrate"));
+                        Selected_Data_Bits = XmlConvert.ToInt32(reader.GetAttribute("Data_Bits"));
+                        Selected_Parity = (Parity) Enum.Parse(Selected_Parity.GetType(), reader.GetAttribute("Parity"));
+                        Selected_Stop_Bits = (StopBits) Enum.Parse(Selected_Stop_Bits.GetType(), reader.GetAttribute("Stop_Bits"));
+                    }
+                    else if (reader.NodeType == XmlNodeType.Element && reader.Name == "Modbus_Slave")
+                    {
+                        Selected_Slave_Address = XmlConvert.ToByte(reader.GetAttribute("Slave_Address"));
+                        Selected_Start_Register = XmlConvert.ToUInt16(reader.GetAttribute("Start_Register"));
+                        Selected_Number_Of_Registers = XmlConvert.ToUInt16(reader.GetAttribute("Number_Of_Registers"));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error reading config file. {0}", e.Message);
+                Environment.Exit(1);
+            }
         }
-
     }
 }
