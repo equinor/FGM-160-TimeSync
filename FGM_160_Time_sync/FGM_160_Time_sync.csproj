@@ -59,7 +59,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FGM_160_Time_sync.xml" />
+    <Content Include="FGM_160_Time_sync.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
