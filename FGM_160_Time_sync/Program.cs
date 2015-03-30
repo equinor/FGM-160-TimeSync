@@ -5,13 +5,15 @@ using System.Text;
 using System.IO.Ports;
 using System.Xml;
 using Modbus.Device;
+using Modbus.Utility;
 
 
 namespace FGM_160_Time_sync
 {
     class Program
     {
-        private static bool Verbose = false;
+        private static bool Verbose = true;
+        private static bool Read_Only = false;
 
         private static String   Selected_Com_Port      = "COM1";
         private static int      Selected_Baud_Rate     = 38400;
@@ -30,9 +32,13 @@ namespace FGM_160_Time_sync
             // Parse command line arguments
             foreach (string arg in args)
             {
-                if (arg.Equals(@"/v"))
+                if (arg.Equals(@"-v"))
                 {
                     Verbose = true;
+                }
+                else if (arg.Equals(@"-r"))
+                {
+                    Read_Only = true;
                 }
             }
 
@@ -46,24 +52,50 @@ namespace FGM_160_Time_sync
             Com_Port.DataBits = Selected_Data_Bits;
             Com_Port.Parity = Selected_Parity;
             Com_Port.StopBits = Selected_Stop_Bits;
-            Com_Port.ReadTimeout = 5000;
+            Com_Port.ReadTimeout = 500;
             Com_Port.Open();
 
             IModbusSerialMaster Modbus_Master = ModbusSerialMaster.CreateRtu(Com_Port);
 
-            ushort[] Registers;
+            ushort[] Registers = { 0x44fb, 0xe000, 0x4040, 0x0000, 0x41f8, 0x0000,
+                                   0x4100, 0x0000, 0x4260, 0x0000, 0x4188, 0x0000 };
             try
             {
                 Registers = Modbus_Master.ReadHoldingRegisters(Selected_Slave_Address,
                     Selected_Start_Register, Selected_Number_Of_Registers);
             }
-            catch
+            catch (Exception e)
             {
-
+                Console.WriteLine("Error reading Modbus slave. {0}", e.Message);
+                //Environment.Exit(1);
             }
-            44u.GetType();
+
+            float Year = ModbusUtility.GetSingle(Registers[0], Registers[1]);
+            float Month = ModbusUtility.GetSingle(Registers[2], Registers[3]);
+            float Day = ModbusUtility.GetSingle(Registers[4], Registers[5]);
+            float Hour = ModbusUtility.GetSingle(Registers[6], Registers[7]);
+            float Minute = ModbusUtility.GetSingle(Registers[8], Registers[9]);
+            float Second = ModbusUtility.GetSingle(Registers[10], Registers[11]);
+
+            DateTime Device_Time_Stamp = new DateTime((int)Year, (int)Month, (int)Day, (int) Hour, (int) Minute, (int) Second);
+            DateTime Reference_Time_Stamp = DateTime.Now;
+            TimeSpan Time_Difference = Reference_Time_Stamp - Device_Time_Stamp;
+
+            if (Verbose)
+            {
+                Console.WriteLine("Device time: {0}", Device_Time_Stamp.ToString());
+                Console.WriteLine("Reference time: {0}", Reference_Time_Stamp.ToString());
+                Console.WriteLine("Time difference: {0}", Time_Difference.ToString());
+            }
+
 
             // Compare clock from FGM160 with local time.
+
+            if (Time_Difference.Duration() > Threshold)
+            {
+                Console.WriteLine("Difference is larger than threshold");
+            }
+
             // If difference is more than threshold then write
             // local time to FGM160.
 
