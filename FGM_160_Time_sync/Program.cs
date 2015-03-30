@@ -100,6 +100,7 @@ namespace FGM_160_Time_sync
                         Selected_Slave_Address = XmlConvert.ToByte(reader.GetAttribute("Slave_Address"));
                         Selected_Start_Register = XmlConvert.ToUInt16(reader.GetAttribute("Start_Register"));
                         Selected_Number_Of_Registers = XmlConvert.ToUInt16(reader.GetAttribute("Number_Of_Registers"));
+                        Threshold = TimeSpan.FromSeconds(XmlConvert.ToDouble(reader.GetAttribute("Threshold")));
                     }
                 }
             }

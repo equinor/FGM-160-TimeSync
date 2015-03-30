@@ -11,5 +11,6 @@
   <Modbus_Slave
     Slave_Address="1"
     Start_Register="1000"
-    Number_Of_Registers="12"/>
+    Number_Of_Registers="12"
+    Threshold="120"/>
 </Config>
