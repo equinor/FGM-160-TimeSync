@@ -37,8 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Modbus">
-      <HintPath>F:\Statoil Documents\Visual Studio 2008\Projects\NModbus\bin\net\Modbus.dll</HintPath>
+    <Reference Include="Modbus, Version=1.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>\\ka-fsR\homeR\ROVO\Statoil Documents\Visual Studio 2008\Projects\NModbus\source\src\Modbus\bin\Debug\Modbus.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
