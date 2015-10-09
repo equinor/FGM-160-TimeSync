@@ -6,7 +6,6 @@ using System.IO.Ports;
 using System.Xml;
 using Modbus.Device;
 using Modbus.Utility;
-//using Modbus.Extensions;
 
 
 namespace FGM_160_Time_sync
