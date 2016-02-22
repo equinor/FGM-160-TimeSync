@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FGM_160_Time_sync", "FGM_160_Time_sync\FGM_160_Time_sync.csproj", "{57E0CE6F-CF6C-4F54-9E9E-AD6473B2C2C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCS_Reader", "DCS_Reader\DCS_Reader.csproj", "{C8E5E426-A444-4710-87F0-311577806EF2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,10 +13,6 @@ Global
 		{57E0CE6F-CF6C-4F54-9E9E-AD6473B2C2C0}.Debug|x86.Build.0 = Debug|x86
 		{57E0CE6F-CF6C-4F54-9E9E-AD6473B2C2C0}.Release|x86.ActiveCfg = Release|x86
 		{57E0CE6F-CF6C-4F54-9E9E-AD6473B2C2C0}.Release|x86.Build.0 = Release|x86
-		{C8E5E426-A444-4710-87F0-311577806EF2}.Debug|x86.ActiveCfg = Debug|x86
-		{C8E5E426-A444-4710-87F0-311577806EF2}.Debug|x86.Build.0 = Debug|x86
-		{C8E5E426-A444-4710-87F0-311577806EF2}.Release|x86.ActiveCfg = Release|x86
-		{C8E5E426-A444-4710-87F0-311577806EF2}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
