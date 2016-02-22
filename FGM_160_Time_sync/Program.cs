@@ -14,6 +14,7 @@ namespace FGM_160_Time_sync
     {
         private static bool Verbose = false;
         private static bool Read_Only = false;
+        private static string Config_File = "FGM_160_Time_sync.xml";
 
         private static String   Selected_Com_Port      = "COM1";
         private static int      Selected_Baud_Rate     = 38400;
@@ -40,11 +41,15 @@ namespace FGM_160_Time_sync
                 {
                     Read_Only = true;
                 }
+                else if (arg[0] != 45)
+                {
+                    Config_File = arg;
+                }
             }
 
 
             // Read config file.
-            Read_Config("FGM_160_Time_sync.xml");
+            Read_Config(Config_File);
 
             // Read clock from FGM160.
             SerialPort Com_Port = new SerialPort(Selected_Com_Port);
@@ -128,10 +133,9 @@ namespace FGM_160_Time_sync
             settings.IgnoreProcessingInstructions = true;
             settings.IgnoreWhitespace = true;
 
-            XmlReader reader = XmlReader.Create(Config_File, settings);
-
             try
             {
+                XmlReader reader = XmlReader.Create(Config_File, settings);
                 while (reader.Read())
                 {
                     if (reader.NodeType == XmlNodeType.Element && reader.Name == "Serial_Port")

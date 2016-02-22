@@ -12,5 +12,5 @@
     Slave_Address="1"
     Start_Register="1150"
     Number_Of_Registers="6"
-    Threshold="120"/>
+    Threshold="1"/>
 </Config>
