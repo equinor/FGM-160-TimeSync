@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO.Ports;
 using System.Xml;
-using Modbus.Device;
-using Modbus.Utility;
-
+using NModbus;
+using NModbus.IO;
+using NModbus.Serial;
+using NModbus.Utility;
 
 namespace FGM_160_Time_sync
 {
@@ -60,7 +58,10 @@ namespace FGM_160_Time_sync
             Com_Port.ReadTimeout = 5000;
             Com_Port.Open();
 
-            IModbusMaster Modbus_Master = ModbusSerialMaster.CreateRtu(Com_Port);
+            IStreamResource port = new SerialPortAdapter(Com_Port);
+
+            ModbusFactory factory = new ModbusFactory();
+            IModbusSerialMaster Modbus_Master = factory.CreateRtuMaster(port);
 
             ushort[] Registers = { 0x44fb, 0xe000, 0x4040, 0x0000, 0x41f8, 0x0000,
                                    0x4100, 0x0000, 0x4260, 0x0000, 0x4188, 0x0000 };
@@ -122,7 +123,6 @@ namespace FGM_160_Time_sync
 
                 Modbus_Master.WriteMultipleRegisters(Selected_Slave_Address,
                     Selected_Start_Register, Registers);
-
             }
         }
 
